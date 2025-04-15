@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PropertyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +27,7 @@ Route::middleware([
 
     Route::get('/dashboard',[AuthController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('property', [AuthController::class, 'property'])->name('property');
-    Route::get('add-property', [AuthController::class, 'addpro'])->name('add-property');
-    Route::post('add-property', [AuthController::class, 'addproperty'])->name('add-property');
+    Route::get('property', [PropertyController::class, 'property'])->name('property');
+    Route::get('add-property', [PropertyController::class, 'addpro'])->name('add-property');
+    Route::post('add-property', [PropertyController::class, 'addproperty'])->name('add-property');
 });
