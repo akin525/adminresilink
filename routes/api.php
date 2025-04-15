@@ -47,6 +47,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    });
 
 
+Route::controller(PropertyController::class)->group(function () {
+    Route::get('propertylist', 'fetchproperties')->name('fetchproperties');
+});
+Route::controller(TeamController::class)->group(function () {
+    Route::get('teamlist', 'fetchteams')->name('teams');
+});
+
 Route::middleware(['jwt.verify'])->group(function () {
     Route::controller(PropertyController::class)->group(function () {
         Route::post('createproperty', 'create')->name('createproperties');
