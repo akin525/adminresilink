@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="px-6 py-2 bg-slate-50 dark:bg-slate-800 text-center">
-                        <p class="mb-0 text-slate-400">© <script>document.write(new Date().getFullYear())</script> Hously. Designed by <a href="../../index.html" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                        <p class="mb-0 text-slate-400">© <script>document.write(new Date().getFullYear())</script> </p>
                     </div>
                 </div>
             </div>
