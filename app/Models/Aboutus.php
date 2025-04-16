@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Aboutus extends Model
 {
 
-    protected $table = 'teams';
+    protected $table = 'abouts';
     protected $guarded=[];
 }

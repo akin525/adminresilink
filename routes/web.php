@@ -30,4 +30,7 @@ Route::middleware([
     Route::get('property', [PropertyController::class, 'property'])->name('property');
     Route::get('add-property', [PropertyController::class, 'addpro'])->name('add-property');
     Route::post('add-property', [PropertyController::class, 'addproperty'])->name('add-property');
+    Route::get('allusers', [\App\Http\Controllers\UserController::class, 'alluser'])->name('allusers');
+    Route::get('teams', [\App\Http\Controllers\TeamController::class, 'viewteam'])->name('teams');
+    Route::post('teams', [\App\Http\Controllers\TeamController::class, 'addteam'])->name('teams');
 });

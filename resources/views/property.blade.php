@@ -45,15 +45,6 @@
                         <span>{{$datas['description']}}</span>
                     </li>
 
-{{--                    <li class="flex items-center me-4">--}}
-{{--                        <i class="mdi mdi-bed text-2xl me-2 text-green-600"></i>--}}
-{{--                        <span>4 Beds</span>--}}
-{{--                    </li>--}}
-
-{{--                    <li class="flex items-center">--}}
-{{--                        <i class="mdi mdi-shower text-2xl me-2 text-green-600"></i>--}}
-{{--                        <span>4 Baths</span>--}}
-{{--                    </li>--}}
                 </ul>
 
                 <ul class="pt-6 flex justify-between items-center list-none">
@@ -93,26 +84,5 @@
             </nav>
         </div>
     </div><!--end grid-->
-
-    <!-- Modal for Image Preview -->
-    <div x-data="{ showModal: false, images: [], current: 0 }" x-show="showModal"
-         class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-         x-cloak>
-        <div class="bg-white rounded-xl max-w-2xl w-full p-4 relative">
-            <button @click="showModal = false" class="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
-
-            <div class="flex justify-center">
-                <img :src="images[current]" class="rounded-md w-full h-96 object-cover" alt="Property Image">
-            </div>
-
-            <div class="flex justify-center space-x-2 mt-4">
-                <template x-for="(img, index) in images" :key="index">
-                    <img :src="img" @click="current = index"
-                         class="w-16 h-16 object-cover cursor-pointer rounded border border-gray-300 hover:border-green-500"
-                         :class="{ 'ring-2 ring-green-600': index === current }">
-                </template>
-            </div>
-        </div>
-    </div>
 
 @endsection

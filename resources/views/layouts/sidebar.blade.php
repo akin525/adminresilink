@@ -55,6 +55,18 @@
                 <li>
                     <a href="{{route('add-property')}}"><i class="mdi mdi-home-plus me-2"></i>Add Properties</a>
                 </li>
+                <li>
+                    <a href="{{route('allusers')}}"><i class="mdi mdi-account me-2"></i>Users</a>
+                </li>
+                <li>
+                    <a href="{{route('teams')}}"><i class="mdi mdi-account-group-outline me-2"></i>Teams</a>
+                </li>
+                <li>
+                    <a href="{{route('teams')}}"><i class="mdi mdi-currency-ngn me-2"></i>Payments</a>
+                </li>
+                <li>
+                    <a href="#"><i class="mdi mdi-home me-2"></i>Settings</a>
+                </li>
 
 
             </ul>
@@ -204,24 +216,24 @@
                         </button>
                         <!-- Dropdown menu -->
                         <div class="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow-sm dark:shadow-gray-700 hidden" onclick="event.stopPropagation();">
-                            <ul class="py-2 text-start">
-                                <li>
-                                    <a href="profile.html" class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i class="mdi mdi-account-outline me-2"></i>Profile</a>
-                                </li>
-                                <li>
-                                    <a href="chat.html" class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i class="mdi mdi-chat-outline me-2"></i>Chat</a>
-                                </li>
-                                <li>
-                                    <a href="profile-setting.html" class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i class="mdi mdi-cog-outline me-2"></i>Settings</a>
-                                </li>
-                                <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
-                                <li>
-                                    <a href="lock-screen.html" class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i class="mdi mdi-lock-outline me-2"></i>Lockscreen</a>
-                                </li>
-                                <li>
-                                    <a href="login.html" class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i class="mdi mdi-logout me-2"></i>Logout</a>
-                                </li>
-                            </ul>
+{{--                            <ul class="py-2 text-start">--}}
+{{--                                <li>--}}
+{{--                                    <a href="profile.html" class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i class="mdi mdi-account-outline me-2"></i>Profile</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="chat.html" class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i class="mdi mdi-chat-outline me-2"></i>Chat</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="profile-setting.html" class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i class="mdi mdi-cog-outline me-2"></i>Settings</a>--}}
+{{--                                </li>--}}
+{{--                                <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="lock-screen.html" class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i class="mdi mdi-lock-outline me-2"></i>Lockscreen</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="login.html" class="block py-1 px-4 dark:text-white/70 hover:text-green-600 dark:hover:text-white"><i class="mdi mdi-logout me-2"></i>Logout</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
                         </div>
                     </li><!--end dropdown-->
                     <!-- User/Profile Dropdown -->
