@@ -60,10 +60,16 @@ class TeamController extends Controller
     }
     function updateteam(Request $request,$id)
     {
-        $data=Team::where('id',$id)->first();
-        if (!$data){
-            toast('Team not found', 'danger');
-            return back();
+        $team = Team::findOrFail($id);
+        $team->name = $request->name;
+        $team->position = $request->position;
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $team->image = $imageName;
         }
+        $team->save();
+        toast('Team Updated Successful','success');
+        return redirect()->back();
     }
 }

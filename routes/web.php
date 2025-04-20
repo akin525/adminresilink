@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,4 +34,6 @@ Route::middleware([
     Route::get('allusers', [\App\Http\Controllers\UserController::class, 'alluser'])->name('allusers');
     Route::get('teams', [\App\Http\Controllers\TeamController::class, 'viewteam'])->name('teams');
     Route::post('teams', [\App\Http\Controllers\TeamController::class, 'addteam'])->name('teams');
+    Route::put('/team/update/{id}', [TeamController::class, 'updateteam'])->name('team.update');
+
 });
