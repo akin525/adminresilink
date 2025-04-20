@@ -51,7 +51,7 @@
         <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 mt-10">
             @forelse ($teams as $member)
                 <div class="bg-white dark:bg-slate-800 rounded-lg shadow p-4 text-center relative">
-                    <img src="{{ asset('images/' . $member->image) }}" alt="Photo" class="w-24 h-24 mx-auto rounded-full object-cover mb-4">
+                    <img src="{{ asset('public/images/' . $member->image) }}" alt="Photo" class="w-24 h-24 mx-auto rounded-full object-cover mb-4">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ $member->name }}</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-300">{{ $member->position }}</p>
                     <button
