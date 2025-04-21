@@ -21,6 +21,7 @@
 @yield('style')
 </head>
 <body class="font-league text-base text-black dark:text-white dark:bg-slate-900">
+@include('sweetalert::alert')
 
 @yield('content')
 
