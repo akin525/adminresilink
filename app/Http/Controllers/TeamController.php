@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class TeamController extends Controller
 {
     function fetchteams(Request $request){
-        $data=Team::paginate(15);
+        $data=Team::get();
         return response()->json(['status'=>'true','message'=>'Team Fetched','data'=>$data
         ],200);
     }
