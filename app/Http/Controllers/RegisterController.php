@@ -43,7 +43,7 @@ class RegisterController extends Controller
         ]);
 
         // Send email with verification token
-//        Mail::to($user->email)->send(new VerifyEmail($user));
+        Mail::to($user->email)->send(new VerifyEmail($user));
 
         // Return response
         return response()->json([
