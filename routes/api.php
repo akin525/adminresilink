@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\RegisterController;
@@ -55,6 +56,7 @@ Route::controller(TeamController::class)->group(function () {
 });
 
 Route::middleware(['jwt.verify'])->group(function () {
+    Route::get('profile', [AuthController::class, 'profile'])->name('profile');
     Route::controller(PropertyController::class)->group(function () {
         Route::post('createproperty', 'create')->name('createproperties');
         Route::get('properties', 'fetchproperties')->name('fetchproperties');

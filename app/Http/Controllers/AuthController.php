@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -50,7 +51,22 @@ class AuthController extends Controller
         return view('dashboard', compact('data'));
     }
 
+    public function profile(Request $request)
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['error' => 'User not found'], 404);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Token is invalid or expired'], 401);
+        }
 
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Profile fetched successfully',
+            'user' => $user
+        ]);
+    }
     public function login(Request $request)
     {
         $this->validate($request,
