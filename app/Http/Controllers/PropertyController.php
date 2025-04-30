@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PropertyController extends Controller
@@ -201,18 +202,18 @@ class PropertyController extends Controller
                 'message' => 'Invalid user'], 401);
         }
 
-//        if ($user->type !== "agent" || $user->type !== "admin") {
-//            return response()->json(['status' => 'false',
-//                'message' => 'You are not allowed to upload a property. Kindly become an Agent'], 401);
-//        }
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                // Validate and store image
+                $imagePath = $image->store('public/properties');
+                $imagePaths[] = Storage::url($imagePath); // Get the public URL
+            }
+        }
 
-        // Convert images to JSON string if it's an array
-        $images = is_array($request->images) ? json_encode($request->images) : $request->images;
+        // Save the images as a JSON string
+        $images = json_encode($imagePaths);
 
-        // Convert video to string if it's an array or null
-//        $video = $request->video ? (is_array($request->video) ? json_encode($request->video) : $request->video) : null;
-
-        // Create property
         $property = Property::create([
             'title' => $request->title,
             'type' => $request->type,
