@@ -203,16 +203,16 @@ class PropertyController extends Controller
         }
 
         $imagePaths = [];
+
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                // Validate and store image
-                $imagePath = $image->store('public/properties');
-                $imagePaths[] = Storage::url($imagePath); // Get the public URL
+            foreach ($request->file('images') as $index => $image) {
+                $imageName = time() . '_' . $index . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/properties'), $imageName);
+                $imagePaths[] = asset('images/properties/' . $imageName); // Get the public URL
             }
         }
 
-        // Save the images as a JSON string
-        $images = json_encode($imagePaths);
+
 
         $property = Property::create([
             'title' => $request->title,
@@ -227,7 +227,7 @@ class PropertyController extends Controller
             'city' => $request->city,
             'state' => $request->state,
             'description' => $request->description,
-            'images' => $images,
+            'images' => json_encode($imagePaths),
 //            'video' => $video,
             'posted_by' => $request->posted_by,
         ]);
