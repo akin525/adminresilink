@@ -100,7 +100,6 @@ class PropertyController extends Controller
             'rooms' => 'required|numeric',
             'city' => 'required',
             'state' => 'required',
-            'country' => 'required',
             'description' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Removed 'required' from nullable
             'video' => 'nullable|mimes:mp4,mov,avi|max:10000' // Added video validation
@@ -120,7 +119,6 @@ class PropertyController extends Controller
             'address' => $request->address,
             'city' => $request->city,
             'state' => $request->state,
-            'country' => $request->country,
             'description' => $request->description,
             'updated_at' => now()
         ];
