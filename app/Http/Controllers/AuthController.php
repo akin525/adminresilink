@@ -64,7 +64,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'true',
             'message' => 'Profile fetched successfully',
-            'user' => $user
+            'data' => $user
         ]);
     }
     public function login(Request $request)
