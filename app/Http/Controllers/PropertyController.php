@@ -201,7 +201,7 @@ class PropertyController extends Controller
                 'message' => 'Invalid user'], 401);
         }
 
-        if ($user->type !== "users") {
+        if ($user->type !== "agent" || $user->type !== "admin") {
             return response()->json(['status' => 'false',
                 'message' => 'You are not allowed to upload a property. Kindly become an Agent'], 401);
         }
