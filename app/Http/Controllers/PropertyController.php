@@ -201,10 +201,10 @@ class PropertyController extends Controller
                 'message' => 'Invalid user'], 401);
         }
 
-        if ($user->type !== "agent" || $user->type !== "admin") {
-            return response()->json(['status' => 'false',
-                'message' => 'You are not allowed to upload a property. Kindly become an Agent'], 401);
-        }
+//        if ($user->type !== "agent" || $user->type !== "admin") {
+//            return response()->json(['status' => 'false',
+//                'message' => 'You are not allowed to upload a property. Kindly become an Agent'], 401);
+//        }
 
         // Convert images to JSON string if it's an array
         $images = is_array($request->images) ? json_encode($request->images) : $request->images;
