@@ -182,7 +182,7 @@ class PropertyController extends Controller
                 'address' => 'required',
                 'state' => 'required',
                 'description' => 'required',
-                'images' => 'required',
+                'images' => 'required|array', // Ensure it's an array
                 'posted_by' => 'required',
             ]);
         if ($validator->fails()) {
@@ -201,13 +201,19 @@ class PropertyController extends Controller
                 'message' => 'Invalid user'], 401);
         }
 
-        if (!$user->type == "users") {
+        if ($user->type !== "users") {
             return response()->json(['status' => 'false',
-                'message' =>  'You are not allowed to upload a property. Kindly become an Angent'], 401);
+                'message' => 'You are not allowed to upload a property. Kindly become an Agent'], 401);
         }
 
-        // Create user
-        $user = Property::create([
+        // Convert images to JSON string if it's an array
+        $images = is_array($request->images) ? json_encode($request->images) : $request->images;
+
+        // Convert video to string if it's an array or null
+//        $video = $request->video ? (is_array($request->video) ? json_encode($request->video) : $request->video) : null;
+
+        // Create property
+        $property = Property::create([
             'title' => $request->title,
             'type' => $request->type,
             'mode' => $request->mode,
@@ -220,15 +226,15 @@ class PropertyController extends Controller
             'city' => $request->city,
             'state' => $request->state,
             'description' => $request->description,
-            'images' => $request->images,
-            'video' => $request->video,
+            'images' => $images,
+//            'video' => $video,
             'posted_by' => $request->posted_by,
         ]);
 
         return response()->json([
-            'status'=>'true',
-            'message'=>'Property uploaded successful.',
-            'data' => $user
+            'status' => 'true',
+            'message' => 'Property uploaded successfully.',
+            'data' => $property
         ]);
     }
 
