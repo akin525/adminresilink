@@ -14,7 +14,7 @@ class LoginController extends Controller
     {
         $validator = Validator::make($request->all(),
             [
-                'username' => 'required',
+                'email' => 'required',
                 'password' => 'required',
             ]);
         if ($validator->fails()) {
@@ -26,10 +26,10 @@ class LoginController extends Controller
         }
 
         // Find user by email
-        $user = User::where('username', $request->username)->first();
+        $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            return response()->json(['error' => 'Invalid username or password'], 401);
+            return response()->json(['error' => 'Invalid email or password'], 401);
         }
 
         // Check if the password is correct
