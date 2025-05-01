@@ -19,7 +19,7 @@
         <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 mt-6">
             @forelse($data as $datas)
                 @php
-                    use Illuminate\Support\Str;
+
 
                     $images = json_decode($datas['images'], true);
 
