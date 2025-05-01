@@ -119,10 +119,8 @@
                                 $images = json_decode($datas['images'], true);
                                 $firstImage = $images[0] ?? 'default.jpg';
 
-                                // Check if it's a full URL or a relative path
-                                $imageSrc = Str::startsWith($firstImage, ['http://', 'https://'])
-                                    ? $firstImage
-                                    : asset('public/images/' . $firstImage);
+                                // Add /public before /images
+                                $imageSrc = str_replace('/images/', '/public/images/', $firstImage);
                             @endphp
 
                             <div class="relative md:shrink-0">
