@@ -117,12 +117,18 @@
                         <div class="flex items-center">
                             @php
                                 $images = json_decode($datas['images'], true);
-                                $imageUrls = $images; // Use the image paths as-is
-                                $firstImage = $imageUrls[0] ?? 'default.jpg'; // Set your own default if needed
+                                $firstImage = $images[0] ?? 'default.jpg';
+
+                                // Check if it's a full URL or a relative path
+                                $imageSrc = Str::startsWith($firstImage, ['http://', 'https://'])
+                                    ? $firstImage
+                                    : asset('public/images/' . $firstImage);
                             @endphp
+
                             <div class="relative md:shrink-0">
-                                <img src="{{asset('public/images/' . $firstImage )}}" class="object-cover size-14 min-w-[56px] rounded-md shadow-sm dark:shadow-gray-700" alt="">
+                                <img src="{{ $imageSrc }}" class="object-cover size-14 min-w-[56px] rounded-md shadow-sm dark:shadow-gray-700" alt="">
                             </div>
+
 
                             <div class="ms-2">
                                 <a href="" class="font-medium hover:text-green-600 block text-lg">{{$datas['title']}}</a>
