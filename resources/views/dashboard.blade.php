@@ -117,11 +117,11 @@
                         <div class="flex items-center">
                             @php
                                 $images = json_decode($datas['images'], true);
-                                $imageUrls = array_map(function($img) { return url($img); }, $images);
-                                $firstImage = $imageUrls[0] ?? url('default.jpg');
+                                $imageUrls = $images; // Use the image paths as-is
+                                $firstImage = $imageUrls[0] ?? 'default.jpg'; // Set your own default if needed
                             @endphp
                             <div class="relative md:shrink-0">
-                                <img src="{{ url($firstImage) }}" class="object-cover size-14 min-w-[56px] rounded-md shadow-sm dark:shadow-gray-700" alt="">
+                                <img src="{{asset('public/images/' . $firstImage )}}" class="object-cover size-14 min-w-[56px] rounded-md shadow-sm dark:shadow-gray-700" alt="">
                             </div>
 
                             <div class="ms-2">

@@ -34,7 +34,7 @@ class LoginController extends Controller
 
         // Check if the password is correct
         if (!Hash::check($request->password, $user->password)) {
-            return response()->json(['error' => 'Invalid username or password'], 401);
+            return response()->json(['error' => 'Invalid email or password'], 401);
         }
 
         // Generate JWT token for user
