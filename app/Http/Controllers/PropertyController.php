@@ -166,6 +166,15 @@ class PropertyController extends Controller
         return response()->json(['status'=>'true','message'=>'Property Fetched','data'=>$data
         ],200);
     }
+    function Gfetchpropertiesbyid($id){
+
+        $data=Property::whereId($id)->first();
+        if (!isset($data)){
+            return response()->json(['status'=>'false','message'=>'No Property with the id'],200);
+        }
+        return response()->json(['status'=>'true','message'=>'Property Fetched','data'=>$data
+        ],200);
+    }
 
 
     public function create(Request $request)
