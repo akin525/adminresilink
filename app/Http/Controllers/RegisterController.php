@@ -31,7 +31,7 @@ class RegisterController extends Controller
                 'errors' => $validator->errors(),
             ], 422);
         }
-        $verification_token = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
+        $verification_token = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
         // Create user
         $user = User::create([
             'name' => $request->name,
@@ -96,7 +96,7 @@ class RegisterController extends Controller
         }
 
         // Generate new token
-        $user->verification_token = Str::random(60);
+        $user->verification_token = rand(100000, 999999);
         $user->save();
 
         // Send verification email
