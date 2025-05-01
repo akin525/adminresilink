@@ -152,29 +152,53 @@ class PropertyController extends Controller
         return redirect()->back()->with('success', 'Property updated successfully');
     }
 
-    function fetchproperties(Request $request){
-        $data=Property::paginate(15);
-        return response()->json(['status'=>'true','message'=>'Property Fetched','data'=>$data
-        ],200);
-    }
-    function fetchpropertiesbyid($id){
+    function fetchproperties(Request $request)
+    {
+        $data = Property::with('postedBy')->paginate(15);
 
-        $data=Property::whereId($id)->first();
-        if (!isset($data)){
-            return response()->json(['status'=>'false','message'=>'No Property with the id'],200);
-        }
-        return response()->json(['status'=>'true','message'=>'Property Fetched','data'=>$data
-        ],200);
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Properties Fetched',
+            'data' => $data
+        ], 200);
     }
-    function Gfetchpropertiesbyid($id){
 
-        $data=Property::whereId($id)->first();
-        if (!isset($data)){
-            return response()->json(['status'=>'false','message'=>'No Property with the id'],200);
+    function fetchpropertiesbyid($id)
+    {
+        $data = Property::with('postedBy')->whereId($id)->first();
+
+        if (!$data) {
+            return response()->json([
+                'status' => 'false',
+                'message' => 'No Property with the id'
+            ], 200);
         }
-        return response()->json(['status'=>'true','message'=>'Property Fetched','data'=>$data
-        ],200);
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Property Fetched',
+            'data' => $data
+        ], 200);
     }
+
+    function Gfetchpropertiesbyid($id)
+    {
+        $data = Property::with('postedBy')->whereId($id)->first();
+
+        if (!$data) {
+            return response()->json([
+                'status' => 'false',
+                'message' => 'No Property with the id'
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Property Fetched',
+            'data' => $data
+        ], 200);
+    }
+
 
 
     public function create(Request $request)
