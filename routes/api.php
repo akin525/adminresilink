@@ -50,7 +50,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(PropertyController::class)->group(function () {
     Route::get('propertylist', 'fetchproperties')->name('fetchproperties');
-    Route::get('propertyid/{id}', 'Gfetchproperties');
+    Route::get('propertyid/{id}', 'Gfetchpropertiesbyid');
 });
 Route::controller(TeamController::class)->group(function () {
     Route::get('teamlist', 'fetchteams')->name('teams');
