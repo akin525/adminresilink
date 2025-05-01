@@ -18,6 +18,7 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username',
+            'phone' => 'required',
             'type' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed', // expects password_confirmation field too
@@ -35,6 +36,7 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
+            'phone' => $request->phone,
             'type' => $request->type,
             'email' => $request->email,
             'password' => bcrypt($request->password), // Hash password
