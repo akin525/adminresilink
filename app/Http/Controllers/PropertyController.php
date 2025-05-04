@@ -42,10 +42,10 @@ class PropertyController extends Controller
         $imagePaths = [];
 
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $file) {
-                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('uploads'), $filename);
-                $imagePaths[] = 'uploads/' . $filename;
+            foreach ($request->file('images') as $index => $image) {
+                $imageName = time() . '_' . $index . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/properties'), $imageName);
+                $imagePaths[] = asset('images/properties/' . $imageName);
             }
         }
 
