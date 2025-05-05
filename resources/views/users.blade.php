@@ -69,7 +69,7 @@
                 <h3 class="text-xl font-semibold">Create New User</h3>
                 <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
             </div>
-            <form method="POST" action="{{ route('users.store') }}">
+            <form method="POST">
                 @csrf
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
