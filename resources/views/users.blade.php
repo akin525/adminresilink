@@ -34,7 +34,7 @@
                         </tr>
                         </thead>
                         <tbody id="tableBody">
-                        @foreach($users as $user)
+                        @foreach($data as $user)
                             <tr class="border-b">
                                 <td class="px-5 py-5 text-sm">{{ $user->name }}</td>
                                 <td class="px-5 py-5 text-sm">{{ $user->email }}</td>
