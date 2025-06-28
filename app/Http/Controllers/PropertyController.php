@@ -219,6 +219,9 @@ class PropertyController extends Controller
             'commission' => $request->commission,
             'total_price' => $request->total_price,
             'rooms' => $request->rooms,
+            'toilet' => $request->toilet ??0,
+            'parlour' => $request->parlour ??0,
+            'kitchen' => $request->kitchen ??0,
             'address' => $request->address,
             'city' => $request->city,
             'state' => $request->state,
@@ -279,6 +282,9 @@ class PropertyController extends Controller
         $property->commission = $request->commission;
         $property->total_price = $request->total_price;
         $property->rooms = $request->rooms;
+        $property->kitchen = $request->kitchen ?? 0;
+        $property->parlour = $request->parlour ?? 0;
+        $property->toilet = $request->toilet ?? 0;
         $property->address = $request->address;
         $property->city = $request->city;
         $property->state = $request->state;
