@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\RegisterController;
@@ -31,9 +32,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     });
 
     Route::controller(RegisterController::class)->group(function () {
-        Route::post('register', 'register')->name('register');
-        Route::get('verifyEmail/{token}', 'verifyEmail')->name('verifyEmail');
-    });
+        Route::controller(RegisterController::class)->group(function () {
+            Route::post('register', 'register')->name('register');
+            Route::get('verifyEmail/{token}', 'verifyEmail')->name('verifyEmail');
+            Route::post('resendcode', 'resendVerificationCode');
+        });
 
 //    Route::controller('ForgotPasswordController')->prefix('password')->name('password.')->group(function () {
 //        Route::get('reset', 'showLinkRequestForm')->name('request');
@@ -47,29 +50,32 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    });
 
 
-Route::controller(PropertyController::class)->group(function () {
-    Route::get('propertylist', 'fetchproperties')->name('fetchproperties');
-});
-Route::controller(TeamController::class)->group(function () {
-    Route::get('teamlist', 'fetchteams')->name('teams');
-});
+        Route::controller(PropertyController::class)->group(function () {
+            Route::get('propertylist', 'fetchproperties')->name('fetchproperties');
+            Route::get('propertyid/{id}', 'Gfetchpropertiesbyid');
+        });
+        Route::controller(TeamController::class)->group(function () {
+            Route::get('teamlist', 'fetchteams')->name('teams');
+        });
 
-Route::middleware(['jwt.verify'])->group(function () {
-    Route::controller(PropertyController::class)->group(function () {
-        Route::post('createproperty', 'create')->name('createproperties');
-        Route::get('properties', 'fetchproperties')->name('fetchproperties');
-        Route::get('property/{id}', 'fetchpropertiesbyid')->name('fetchpropertiesbyid');
+        Route::middleware(['jwt.verify'])->group(function () {
+            Route::get('profile', [AuthController::class, 'profile'])->name('profile');
+            Route::controller(PropertyController::class)->group(function () {
+                Route::post('createproperty', 'create')->name('createproperties');
+                Route::get('properties', 'fetchproperties')->name('fetchproperties');
+                Route::get('property/{id}', 'fetchpropertiesbyid')->name('fetchpropertiesbyid');
+            });
+            Route::controller(TeamController::class)->group(function () {
+                Route::get('teams', 'fetchteams')->name('teams');
+                Route::get('team/{id}', 'fetchteamsbyid')->name('teambyid');
+            });
+            Route::controller(UserController::class)->group(function () {
+                Route::get('users', 'fetchusers')->name('fetchusers');
+                Route::get('agents', 'fetchagent')->name('fetchagent');
+                Route::get('user/{id}', 'fetchuserbyid')->name('fetchuserbyid');
+            });
+            Route::controller(AboutController::class)->group(function () {
+                Route::get('aboutus', 'fetchaboutus')->name('fetchaboutus');
+            });
+        });
     });
-    Route::controller(TeamController::class)->group(function () {
-        Route::get('teams', 'fetchteams')->name('teams');
-        Route::get('team/{id}', 'fetchteamsbyid')->name('teambyid');
-    });
-    Route::controller(UserController::class)->group(function () {
-        Route::get('users', 'fetchusers')->name('fetchusers');
-        Route::get('agents', 'fetchagent')->name('fetchagent');
-        Route::get('user/{id}', 'fetchuserbyid')->name('fetchuserbyid');
-    });
-    Route::controller(AboutController::class)->group(function () {
-        Route::get('aboutus', 'fetchaboutus')->name('fetchaboutus');
-    });
-});

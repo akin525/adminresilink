@@ -117,12 +117,16 @@
                         <div class="flex items-center">
                             @php
                                 $images = json_decode($datas['images'], true);
-                                $imageUrls = array_map(function($img) { return url($img); }, $images);
-                                $firstImage = $imageUrls[0] ?? url('default.jpg');
+                                $firstImage = $images[0] ?? 'default.jpg';
+
+                                // Add /public before /images
+                                $imageSrc = str_replace('/images/', '/public/images/', $firstImage);
                             @endphp
+
                             <div class="relative md:shrink-0">
-                                <img src="{{ url($firstImage) }}" class="object-cover size-14 min-w-[56px] rounded-md shadow-sm dark:shadow-gray-700" alt="">
+                                <img src="{{ $imageSrc }}" class="object-cover size-14 min-w-[56px] rounded-md shadow-sm dark:shadow-gray-700" alt="">
                             </div>
+
 
                             <div class="ms-2">
                                 <a href="" class="font-medium hover:text-green-600 block text-lg">{{$datas['title']}}</a>

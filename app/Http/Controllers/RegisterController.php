@@ -18,6 +18,7 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username',
+            'phone' => 'required',
             'type' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed', // expects password_confirmation field too
@@ -30,11 +31,12 @@ class RegisterController extends Controller
                 'errors' => $validator->errors(),
             ], 422);
         }
-        $verification_token = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
+        $verification_token = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
         // Create user
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
+            'phone' => $request->phone,
             'type' => $request->type,
             'email' => $request->email,
             'password' => bcrypt($request->password), // Hash password
@@ -43,7 +45,7 @@ class RegisterController extends Controller
         ]);
 
         // Send email with verification token
-//        Mail::to($user->email)->send(new VerifyEmail($user));
+        Mail::to($user->email)->send(new VerifyEmail($user));
 
         // Return response
         return response()->json([
@@ -77,5 +79,34 @@ class RegisterController extends Controller
             'message' => 'Email successfully verified!'
         ], 200);
     }
+    public function resendVerificationCode(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['status' => 'false', 'message' => 'User not found'], 404);
+        }
+
+        if ($user->email_verified_at) {
+            return response()->json(['status' => 'false', 'message' => 'Email already verified'], 400);
+        }
+
+        // Generate new token
+        $user->verification_token = rand(100000, 999999);
+        $user->save();
+
+        // Send verification email
+        Mail::to($user->email)->send(new VerifyEmail($user));
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Verification code resent successfully.'
+        ], 200);
+    }
+
 
 }

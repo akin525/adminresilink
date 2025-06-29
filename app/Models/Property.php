@@ -10,4 +10,8 @@ class Property extends Model
     protected $table = 'properties';
     protected $guarded=[];
 
+    public function postedBy()
+    {
+        return $this->belongsTo(User::class, 'posted_by');
+    }
 }

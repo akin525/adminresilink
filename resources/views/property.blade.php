@@ -19,11 +19,22 @@
         <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 mt-6">
             @forelse($data as $datas)
                 @php
-                    $images = json_decode($datas['images'], true);
-                    $imageUrls = array_map(fn($img) => url($img), $images);
-                    $firstImage = $imageUrls[0] ?? url('default.jpg');
-                @endphp
 
+
+                    $images = json_decode($datas['images'], true);
+
+                    $imageUrls = array_map(function ($img) {
+                        if (Str::startsWith($img, ['http://', 'https://'])) {
+                            // Insert /public before /images
+                            return str_replace('/images/', '/public/images/', $img);
+                        } else {
+                            // Use asset() for relative paths
+                            return asset($img);
+                        }
+                    }, $images);
+
+                    $firstImage = $imageUrls[0] ?? asset('default.jpg');
+                @endphp
                 <div class="group rounded-xl bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl overflow-hidden duration-500">
                     <div class="relative">
                         <img src="{{ $firstImage }}"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PropertyController extends Controller
@@ -41,10 +42,10 @@ class PropertyController extends Controller
         $imagePaths = [];
 
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $file) {
-                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('uploads'), $filename);
-                $imagePaths[] = 'uploads/' . $filename;
+            foreach ($request->file('images') as $index => $image) {
+                $imageName = time() . '_' . $index . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/properties'), $imageName);
+                $imagePaths[] = asset('images/properties/' . $imageName);
             }
         }
 
@@ -100,7 +101,6 @@ class PropertyController extends Controller
             'rooms' => 'required|numeric',
             'city' => 'required',
             'state' => 'required',
-            'country' => 'required',
             'description' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Removed 'required' from nullable
             'video' => 'nullable|mimes:mp4,mov,avi|max:10000' // Added video validation
@@ -120,7 +120,6 @@ class PropertyController extends Controller
             'address' => $request->address,
             'city' => $request->city,
             'state' => $request->state,
-            'country' => $request->country,
             'description' => $request->description,
             'updated_at' => now()
         ];
@@ -153,20 +152,53 @@ class PropertyController extends Controller
         return redirect()->back()->with('success', 'Property updated successfully');
     }
 
-    function fetchproperties(Request $request){
-        $data=Property::paginate(15);
-        return response()->json(['status'=>'true','message'=>'Property Fetched','data'=>$data
-        ],200);
-    }
-    function fetchpropertiesbyid($id){
+    function fetchproperties(Request $request)
+    {
+        $data = Property::with('postedBy')->paginate(15);
 
-        $data=Property::whereId($id)->first();
-        if (!isset($data)){
-            return response()->json(['status'=>'false','message'=>'No Property with the id'],200);
-        }
-        return response()->json(['status'=>'true','message'=>'Property Fetched','data'=>$data
-        ],200);
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Properties Fetched',
+            'data' => $data
+        ], 200);
     }
+
+    function fetchpropertiesbyid($id)
+    {
+        $data = Property::with('postedBy')->whereId($id)->first();
+
+        if (!$data) {
+            return response()->json([
+                'status' => 'false',
+                'message' => 'No Property with the id'
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Property Fetched',
+            'data' => $data
+        ], 200);
+    }
+
+    function Gfetchpropertiesbyid($id)
+    {
+        $data = Property::with('postedBy')->whereId($id)->first();
+
+        if (!$data) {
+            return response()->json([
+                'status' => 'false',
+                'message' => 'No Property with the id'
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Property Fetched',
+            'data' => $data
+        ], 200);
+    }
+
 
 
     public function create(Request $request)
@@ -183,9 +215,8 @@ class PropertyController extends Controller
                 'rooms' => 'required',
                 'address' => 'required',
                 'state' => 'required',
-                'country' => 'required',
                 'description' => 'required',
-                'images' => 'required',
+                'images' => 'required|array', // Ensure it's an array
                 'posted_by' => 'required',
             ]);
         if ($validator->fails()) {
@@ -204,13 +235,19 @@ class PropertyController extends Controller
                 'message' => 'Invalid user'], 401);
         }
 
-        if (!$user->type == "users") {
-            return response()->json(['status' => 'false',
-                'message' =>  'You are not allowed to upload a property. Kindly become an Angent'], 401);
+        $imagePaths = [];
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $index => $image) {
+                $imageName = time() . '_' . $index . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/properties'), $imageName);
+                $imagePaths[] = asset('images/properties/' . $imageName); // Get the public URL
+            }
         }
 
-        // Create user
-        $user = Property::create([
+
+
+        $property = Property::create([
             'title' => $request->title,
             'type' => $request->type,
             'mode' => $request->mode,
@@ -225,17 +262,16 @@ class PropertyController extends Controller
             'address' => $request->address,
             'city' => $request->city,
             'state' => $request->state,
-            'country' => $request->country,
             'description' => $request->description,
-            'images' => $request->images,
-            'video' => $request->video,
+            'images' => json_encode($imagePaths),
+//            'video' => $video,
             'posted_by' => $request->posted_by,
         ]);
 
         return response()->json([
-            'status'=>'true',
-            'message'=>'Property uploaded successful.',
-            'data' => $user
+            'status' => 'true',
+            'message' => 'Property uploaded successfully.',
+            'data' => $property
         ]);
     }
 
