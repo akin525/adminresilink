@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Models\Property;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TeamController extends Controller
 {
@@ -71,5 +73,35 @@ class TeamController extends Controller
         $team->save();
         toast('Team Updated Successful','success');
         return redirect()->back();
+    }
+
+    function contactUs(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'firstname' => 'required|string',
+            'secondname' => 'required|string',
+            'email' => 'required',
+            'message' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Incomplete request',
+                'error' => $validator->errors(),
+            ], 401);
+        };
+
+        $check=Contact::create([
+            'firstname'=>$request->firstname,
+            'lastname'=>$request->lastname,
+            'email'=>$request->email,
+            'message'=>$request->message,
+        ]);
+
+        return response()->json([
+            'status'=>true,
+            'message'=>'Your message was receive successfully, we will get back to you'
+        ]);
     }
 }
