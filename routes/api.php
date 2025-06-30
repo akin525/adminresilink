@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 //Route::namespace('User\Auth')->name('user.')->group(function () {
+Route::post('contact-us', [TeamController::class,'contactUs']);
 
     Route::controller(LoginController::class)->group(function () {
         Route::post('/login', 'login');
@@ -65,7 +66,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
                 Route::get('properties', 'fetchproperties')->name('fetchproperties');
                 Route::get('property/{id}', 'fetchpropertiesbyid')->name('fetchpropertiesbyid');
             });
-            Route::post('contact-us', [TeamController::class,'contactUs']);
             Route::controller(TeamController::class)->group(function () {
                 Route::get('teams', 'fetchteams')->name('teams');
                 Route::get('team/{id}', 'fetchteamsbyid')->name('teambyid');
