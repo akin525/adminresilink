@@ -79,7 +79,7 @@ class TeamController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'firstname' => 'required|string',
-            'secondname' => 'required|string',
+            'lastname' => 'required|string',
             'email' => 'required',
             'message' => 'required',
         ]);
